@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" >
+    <rect width="100%" height="100%" fill="white" />
+    <!-- Grille de fond -->
+    <defs>
+        <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+            <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#eee" stroke-width="0.5"/>
+        </pattern>
+    </defs>
+    <rect x="0" y="0" width="600" height="400" fill="url(#grid)" />
+
+    <!-- Axes -->
+    <path d="M50,350 L50,50" stroke="black" stroke-width="1.5"/>
+    <path d="M50,350 L550,350" stroke="black" stroke-width="1.5"/>
+    
+    <!-- Labels axes -->
+    <text x="560" y="360" font-family="math" font-style="italic">u</text>
+    <text x="40" y="40" font-family="math" font-style="italic">f(u)</text>
+
+    <!-- Points u_{i-1}, u_i, u_{i+1} -->
+    <line x1="150" y1="345" x2="150" y2="355" stroke="black"/>
+    <text x="140" y="370" font-family="math" font-style="italic">uᵢ₋₁</text>
+
+    <line x1="300" y1="345" x2="300" y2="355" stroke="black"/>
+    <text x="290" y="370" font-family="math" font-style="italic">uᵢ</text>
+
+    <line x1="450" y1="345" x2="450" y2="355" stroke="black"/>
+    <text x="440" y="370" font-family="math" font-style="italic">uᵢ₊₁</text>
+
+    <!-- Courbe f(u) -->
+    <path d="M100,300 Q300,100 500,250" stroke="#2E86C1" stroke-width="2" fill="none"/>
+    <text x="520" y="270" font-family="math" font-style="italic" fill="#2E86C1">f(u)</text>
+
+    <!-- Points P_{i-1}, P_i, P_{i+1} -->
+    <circle cx="150" cy="250" r="4" fill="#1A5276"/>
+    <text x="130" y="240" font-family="math" font-style="italic">Pᵢ₋₁</text>
+
+    <circle cx="300" cy="150" r="4" fill="#1A5276"/>
+    <text x="280" y="140" font-family="math" font-style="italic">Pᵢ</text>
+
+    <circle cx="450" cy="200" r="4" fill="#1A5276"/>
+    <text x="460" y="190" font-family="math" font-style="italic">Pᵢ₊₁</text>
+
+    <!-- Tangente réelle -->
+    <path d="M300,150 L340,130" stroke="#27AE60" stroke-width="2" marker-end="url(#arrowhead)"/>
+    <text x="320" y="120" font-family="math" font-style="italic" fill="#27AE60">f'(uᵢ)</text>
+
+    <!-- Différence finie -->
+    <path d="M150,250 L450,200" stroke="#E74C3C" stroke-width="1" stroke-dasharray="4,4"/>
+    <text x="270" y="240" font-family="math" font-style="italic" fill="#E74C3C">(Pᵢ₊₁ - Pᵢ₋₁)/(uᵢ₊₁ - uᵢ₋₁)</text>
+
+    <!-- Formules -->
+    <text x="100" y="80" font-family="math" font-style="italic">
+        f'(uᵢ) ≈ (f(uᵢ₊₁) - f(uᵢ₋₁))/(2h) + O(h²)
+    </text>
+    <text x="100" y="110" font-family="math" font-style="italic">
+        avec h = uᵢ₊₁ - uᵢ = uᵢ - uᵢ₋₁
+    </text>
+
+    <!-- Définition des marqueurs de flèche -->
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#27AE60"/>
+        </marker>
+    </defs>
+</svg>

@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" >
+    <rect width="100%" height="100%" fill="white" />
+    <!-- Axes -->
+    <path d="M10,300 L10,0 M0,20 L10,0 L20,20" stroke="black" stroke-width="1.5"/>
+    <path d="M10,300 L500,300 M480,290 L500,300 L480,310" stroke="black" stroke-width="1.5"/>
+
+    
+    <!-- Paramètre u -->
+    <path d="M50,320 L450,320" stroke="black" stroke-width="1"/>
+    <line x1="50" y1="315" x2="50" y2="325" stroke="black" stroke-width="1"/>
+    <line x1="250" y1="315" x2="250" y2="325" stroke="black" stroke-width="1"/>
+    <line x1="450" y1="315" x2="450" y2="325" stroke="black" stroke-width="1"/>
+    
+    <!-- Labels u -->
+    <text x="40" y="340" font-family="math" font-style="italic">uᵢ</text>
+    <text x="240" y="340" font-family="math" font-style="italic">uᵢ₊₁</text>
+    <text x="440" y="340" font-family="math" font-style="italic">uᵢ₊₂</text>
+
+    <!-- Premier segment x_i(t) -->
+    <path d="M50,250 C120,200 180,180 250,150" 
+          stroke="#2E86C1" stroke-width="3.5" fill="none"/>
+    <text x="130" y="230" font-family="math" font-style="italic" fill="#2E86C1">xᵢ(t)</text>
+    
+    <!-- Second segment x_{i+1}(t) -->
+    <path d="M250,150 C320,120 380,100 450,80" 
+          stroke="#8E44AD" stroke-width="3.5" fill="none"/>
+    <text x="330" y="150" font-family="math" font-style="italic" fill="#8E44AD">xᵢ₊₁(t)</text>
+    
+    <!-- Points de contrôle P et b -->
+    <!-- Premier segment -->
+    <circle cx="50" cy="250" r="5" fill="#1A5276"/>
+    <circle cx="50" cy="250" r="5" fill="none" stroke="#E74C3C" stroke-width="2"/>
+    <text x="30" y="270" font-family="math" font-style="italic">Pᵢ = b₃ᵢ</text>
+
+    <circle cx="120" cy="200" r="4" fill="#E74C3C"/>
+    <text x="125" y="195" font-family="math" font-style="italic" fill="#C0392B">b₃ᵢ₊₁</text>
+
+    <circle cx="180" cy="180" r="4" fill="#E74C3C"/>
+    <text x="185" y="175" font-family="math" font-style="italic" fill="#C0392B">b₃ᵢ₊₂</text>
+
+    <!-- Point milieu -->
+    <circle cx="250" cy="150" r="5" fill="#1A5276"/>
+    <circle cx="250" cy="150" r="5" fill="none" stroke="#E74C3C" stroke-width="2"/>
+    <text x="260" y="170" font-family="math" font-style="italic">P₍ᵢ₊₁₎ = b₃ᵢ₊₃ </text>
+
+    <!-- Second segment -->
+    <circle cx="320" cy="120" r="4" fill="#E74C3C"/>
+    <text x="325" y="115" font-family="math" font-style="italic" fill="#C0392B">b₃⟮ᵢ₊₁⟯₊₁</text>
+
+    <circle cx="380" cy="100" r="4" fill="#E74C3C"/>
+    <text x="385" y="95" font-family="math" font-style="italic" fill="#C0392B">b₃⟮ᵢ₊₁⟯₊₂</text>
+
+    <circle cx="450" cy="80" r="5" fill="#1A5276"/>
+    <circle cx="450" cy="80" r="5" fill="none" stroke="#E74C3C" stroke-width="2"/>
+    <text x="460" y="100" font-family="math" font-style="italic">P₍ᵢ₊₂₎ = b₃⟮ᵢ₊₁⟯₊₃</text>
+
+    <!-- Vecteurs tangents -->
+    <path d="M50,250 L90,230" stroke="#27AE60" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+    <text x="60" y="220" font-family="math" font-style="italic" fill="#196F3D">mᵢ</text>
+
+    <path d="M250,150 L290,130" stroke="#27AE60" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+    <text x="260" y="120" font-family="math" font-style="italic" fill="#196F3D">mᵢ₊₁</text>
+
+    <path d="M450,80 L490,60" stroke="#27AE60" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+    <text x="460" y="50" font-family="math" font-style="italic" fill="#196F3D">mᵢ₊₂</text>
+
+    <!-- Relations -->
+    <path d="M50,250 L120,200" stroke="#666" stroke-width="1" stroke-dasharray="4,4"/>
+    <text x="65" y="235" font-family="math" font-size="10" fill="#666">Δuᵢm₍ᵢ₎/3</text>
+
+    <path d="M250,150 L320,120" stroke="#666" stroke-width="1" stroke-dasharray="4,4"/>
+    <text x="265" y="145" font-family="math" font-size="10" fill="#666">Δuᵢ₊₁m₍ᵢ₊₁₎/3</text>
+
+    <!-- Définition des marqueurs de flèche -->
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#27AE60"/>
+        </marker>
+    </defs>
+</svg>
