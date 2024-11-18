@@ -53,6 +53,40 @@ def plotBernPoly():
     for k in range(N+1):
         plt.plot(x,Bern[k, :])
 
+def PlotLagrangeCurve(Polygon):
+    """
+    Trace la courbe interpolée de Lagrange en utilisant une structure similaire
+    à PlotBezierCurve.
+
+    Arguments :
+    - Polygon : np.array 2xN, contenant les points de contrôle (x et y).
+    - curve : un objet matplotlib.lines.Line2D à mettre à jour.
+    """
+    N = len(Polygon[0, :]) - 1
+    t = np.linspace(0, N, 200)  # Résolution pour les points interpolés
+    u = np.arange(N + 1)  # u_i = [0, ..., N]
+    
+    # Calcul des points interpolés avec Lagrange
+    x_interp = np.zeros_like(t)
+    y_interp = np.zeros_like(t)
+    
+    for i in range(N + 1):
+        # Calcul du terme de base de Lagrange L_i(t)
+        L_i = np.ones_like(t)
+        for j in range(N + 1):
+            if i != j:
+                L_i *= (t - u[j]) / (u[i] - u[j])
+        
+        # Ajout de la contribution de L_i
+        x_interp += Polygon[0, i] * L_i
+        y_interp += Polygon[1, i] * L_i
+
+    # Mise à jour des données du tracé
+    xdata = np.concatenate((curve.get_xdata(), x_interp))
+    ydata = np.concatenate((curve.get_ydata(), y_interp))
+    curve.set_xdata(xdata)
+    curve.set_ydata(ydata)
+    plt.draw()
 
 def PlotBezierCurve(Polygon):
     N = len(Polygon[0, :])-1
@@ -65,6 +99,7 @@ def PlotBezierCurve(Polygon):
     curve.set_ydata(ydata)
     plt.draw()
     return     
+
 
 
 
@@ -143,10 +178,8 @@ def AcquisitionRMVPoints(minmax,color1,color2):
 
 
 def PlotHermiteSpline(Poly, c=0):
-    n = len(Poly[0,:])  # Poly est un tableau 2xN, donc on prend len(Poly[0]) pour obtenir le nombre de points
-    print(Poly)
+    n = len(Poly[0,:])  
     for i in range(n - 1):
-        print(f"{i}-ème itération")
         # Calcul des tangentes pour chaque point de contrôle
         tang1 = cardinal_splines(Poly, i, c)  # Utilisation de Poly pour les coordonnées
         tang2 = cardinal_splines(Poly, i + 1, c)  # Utilisation de Poly pour les coordonnées
@@ -158,22 +191,54 @@ def PlotHermiteSpline(Poly, c=0):
             Poly[:, i + 1] - tang2 / 3,
             Poly[:, i + 1]
         ]).T
-        
-        # Utilisation de De Casteljau pour interpoler les points de Bézier
         PlotBezierCurve(bezier_points)
+
+
+def derive_cubique(matrice):
+
+    # Get number of columns (N>2)
+    N = matrice.shape[1]
+    col = np.zeros((matrice.shape[0], N))
+    col[:, 0] = 3 * (matrice[:, 1] - matrice[:, 0])
+    col[:, 1:N-1] = 3 * (matrice[:, 2:N] - matrice[:, 0:N-2])
+    col[:, N-1] = 3 * (matrice[:, N-1] - matrice[:, N-2])
     
+    # Create diagonal matrices
+    # Lower diagonal
+    matrice1 = np.diagflat(np.ones(N-1), -1)
+    # Upper diagonal
+    matrice2 = np.diagflat(np.ones(N-1), 1)
+    # Main diagonal (multiplied by 4)
+    matrice3 = 4 * np.eye(N)
+    matrice3[0, 0] = 2
+    matrice3[N-1, N-1] = 2
+    
+    # Sum the matrices
+    A = matrice1 + matrice2 + matrice3
+    
+    # Solve the system and transpose
+    derives = np.linalg.solve(A, col.T).T
+    
+    return derives
 
-def DeCasteljau(poly, T):
-    n = poly.shape[0] - 1
-    result = []
-    for t in T:
-        r = poly.copy()
-        for k in range(0, n):
-            for i in range(0, n - k):
-                r[i, :] = (1 - t) * r[i, :] + t * r[i + 1, :]
 
-        result.append(r[0, :])
-    return np.array(result)
+
+
+def PlotSplineCubique(Polygon):
+    n = Polygon.shape[1]  # Nombre de points de contrôle
+    derivees = derive_cubique(Polygon)
+    for i in range(n - 1):
+        tang1 = derivees[:,i]
+        tang2 = derivees[:,i+1]
+        bezier_points = np.array([
+            Poly[:, i],  # Utiliser Poly pour accéder aux points (les coordonnées x et y)
+            Poly[:, i] + tang1 / 3,
+            Poly[:, i + 1] - tang2 / 3,
+            Poly[:, i + 1]
+        ]).T
+        PlotBezierCurve(bezier_points)
+        
+
 
 
 def cardinal_splines(Poly, index, c=0):
@@ -188,25 +253,24 @@ def cardinal_splines(Poly, index, c=0):
     return (1 - c) * (Poly[:,index + 1] - Poly[:,index - 1]) / 2
 
 
-def cardinal_splines_v2(Poly, index, c=0):
-    pass
+
 
 class Index(object):
 
     def newPoly(self, event):
         global Poly
         Poly = AcquisitionPolygone(minmax,'or',':r')
-        PlotHermiteSpline(Poly, slider.val)
+        PlotHermiteSpline(Poly)
 
     def addPoint(self, event):
         global Poly
         Poly = AcquisitionNvxPoints(minmax,'or',':r')
-        PlotHermiteSpline(Poly, slider.val)
+        PlotHermiteSpline(Poly)
 
     def removePoint(self, event):
         global Poly
         Poly = AcquisitionRMVPoints(minmax,'or',':r')
-        PlotHermiteSpline(Poly, slider.val)
+        PlotHermiteSpline(Poly)
 
 callback = Index()
 # Add buttons with proper spacing to avoid overlap
