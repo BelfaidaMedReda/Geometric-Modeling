@@ -115,21 +115,21 @@ This function plots a cubic spline curve. It uses cubic spline interpolation, wh
 
 #### Hermite Splines with all versions and their corresponding plots :
 
-<div style="text-align: center;">
+<div align="center">
   <img src="pictures/comp.png" alt="Mon Image" width="500"/>
 </div>
 
-<div style="text-align: center;">
+<div align="center">
   <img src="pictures/curvature_comp.png" alt="Mon Image" width="500"/>
 </div>
 
 
 #### Lagrange, Spline Hermite and Spline Cubique C2 :
 
-<div style="text-align: center;">
+<div align="center">
   <img src="pictures/7.b.png" alt="Mon Image" width="500"/>
 </div>
 
-<div style="text-align: center;">
+<div align="center">
   <img src="pictures/curvature.png" alt="Mon Image" width="500"/>
 </div>
