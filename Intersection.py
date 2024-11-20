@@ -368,6 +368,7 @@ if __name__ == '__main__':
         print("--> INTERSECTIONS IN PARAMETRIC DOMAIN :")
         print("list of u-intersections : ",ListRoots_u)
         print("list of v-intersections : ",ListRoots_v)
+    plt.show()
 
 
 
